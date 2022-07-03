@@ -1,0 +1,8 @@
+celery==5.2.7
+Django==4.0.5
+django-filter==22.1
+djangorestframework==3.13.1
+flower==1.1.0
+pandas==1.4.3
+psycopg2-binary==2.9.3
+redis==4.3.4

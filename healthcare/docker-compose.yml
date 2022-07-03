@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: healthcare
+    # '/start' is the shell script used to run the service
+    command: /start
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    # env_file is used to manage the env variables of the project
+    env_file:
+      - ./.env/.dev-sample
+    depends_on:
+      - redis
+      - db
+
+  db:
+    image: postgres:14-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  redis:
+    image: redis:6-alpine
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: healthcare_celery_worker
+    command: /start-celeryworker
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env/.dev-sample
+    depends_on:
+      - redis
+      - db
+
+  flower:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: healthcare_celery_flower
+    command: /start-flower
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env/.dev-sample
+    ports:
+      - 5555:5555
+    depends_on:
+      - redis
+      - db
+
+volumes:
+  postgres_data:
