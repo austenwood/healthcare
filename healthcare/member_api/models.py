@@ -7,7 +7,4 @@ class Member(models.Model):
     phone_number = models.IntegerField()
     client_member_id = models.IntegerField()
     account_id = models.IntegerField()
-
-class Provider(models.Model):
-    account_id = models.IntegerField()
-    members = models.ManyToManyField(Member)
+    
