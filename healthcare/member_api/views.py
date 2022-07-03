@@ -1,9 +1,11 @@
-from rest_framework import status, permissions, generics
-from rest_framework.response import Response
-from .models import Member
-from .serializers import MemberSerializer, FileUploadSerializer
-from healthcare.tasks import process_member_data
 import pandas as pd
+from rest_framework import generics, permissions, status
+from rest_framework.response import Response
+
+from healthcare.tasks import process_member_data
+
+from .models import Member
+from .serializers import FileUploadSerializer, MemberSerializer
 
 
 class MemberListApiView(generics.ListAPIView):

@@ -1,7 +1,9 @@
-from member_api.serializers import MemberSerializer
-from .celery import app
-from member_api.models import Member
 import pandas as pd
+
+from member_api.models import Member
+from member_api.serializers import MemberSerializer
+
+from .celery import app
 
 
 @app.task()

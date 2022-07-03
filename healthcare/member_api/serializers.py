@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import Member
 from rest_framework.validators import UniqueTogetherValidator
+
+from .models import Member
 
 
 class MemberSerializer(serializers.ModelSerializer):
