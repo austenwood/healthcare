@@ -7,4 +7,3 @@ class Member(models.Model):
     phone_number = models.IntegerField()
     client_member_id = models.IntegerField()
     account_id = models.IntegerField()
-    

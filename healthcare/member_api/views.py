@@ -12,7 +12,7 @@ class MemberListApiView(generics.ListAPIView):
 
     queryset = Member.objects.all()
     serializer_class = MemberSerializer
-    
+
     # fields to allow filtering against
     filterset_fields = ['account_id', 'id', 'phone_number', 'client_member_id']
 
