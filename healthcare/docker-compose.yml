@@ -31,7 +31,7 @@ services:
   redis:
     image: redis:6-alpine
 
-  celery_worker:
+  celery-worker:
     build:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
@@ -60,6 +60,20 @@ services:
     depends_on:
       - redis
       - db
+      
+  react-client:
+    build:
+      context: ./client
+    command: yarn start
+    depends_on:
+      - web
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - 3000:3000
+    stdin_open: true
+    volumes:
+      - ./client:/usr/src/app
 
 volumes:
   postgres_data:
