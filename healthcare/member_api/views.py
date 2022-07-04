@@ -9,9 +9,6 @@ from .serializers import FileUploadSerializer, MemberSerializer
 
 
 class MemberListApiView(generics.ListAPIView):
-    # check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
-
     queryset = Member.objects.all()
     serializer_class = MemberSerializer
 
@@ -37,9 +34,6 @@ class MemberListApiView(generics.ListAPIView):
 
 
 class UploadFileView(generics.CreateAPIView):
-    # check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
-
     serializer_class = FileUploadSerializer
 
     def post(self, request):
@@ -47,8 +41,9 @@ class UploadFileView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
 
         file = serializer.validated_data['file']
-
-        chunk_size = 1000
+        
+        # ERROR CHECKING
+        chunk_size = 5000
         with pd.read_csv(file, chunksize=chunk_size) as reader:
             for chunk in reader:
                 serialized_chunk = chunk.to_json()
