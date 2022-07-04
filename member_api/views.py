@@ -1,5 +1,5 @@
 import pandas as pd
-from rest_framework import generics, permissions, status
+from rest_framework import generics, status
 from rest_framework.response import Response
 
 from healthcare.tasks import process_member_data
@@ -25,12 +25,10 @@ class MemberListApiView(generics.ListAPIView):
         }
 
         serializer = MemberSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class UploadFileView(generics.CreateAPIView):
@@ -42,8 +40,8 @@ class UploadFileView(generics.CreateAPIView):
 
         file = serializer.validated_data['file']
         
-        # ERROR CHECKING
         chunk_size = 5000
+
         with pd.read_csv(file, chunksize=chunk_size) as reader:
             for chunk in reader:
                 serialized_chunk = chunk.to_json()
