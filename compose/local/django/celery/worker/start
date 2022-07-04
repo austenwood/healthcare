@@ -3,4 +3,4 @@
 set -o errexit
 set -o nounset
 
-celery -A healthcare worker -l INFO --without-gossip --without-mingle --without-heartbeat
+celery -A healthcare worker -l INFO
