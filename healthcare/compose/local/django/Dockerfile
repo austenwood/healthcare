@@ -15,6 +15,7 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 # Requirements are installed here to ensure they will be cached.
+RUN pip install --upgrade pip
 COPY ./requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 
@@ -34,6 +35,6 @@ COPY ./compose/local/django/celery/flower/start /start-flower
 RUN sed -i 's/\r$//g' /start-flower
 RUN chmod +x /start-flower
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 ENTRYPOINT ["/entrypoint"]
