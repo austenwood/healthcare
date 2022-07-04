@@ -9,7 +9,7 @@ services:
     # '/start' is the shell script used to run the service
     command: /start
     volumes:
-      - .:/app
+      - .:/usr/src/app/
     ports:
       - 8000:8000
     # env_file is used to manage the env variables of the project
@@ -38,7 +38,7 @@ services:
     image: healthcare_celery_worker
     command: /start-celeryworker
     volumes:
-      - .:/app
+      - .:/usr/src/app/
     env_file:
       - ./.env/.dev
     depends_on:
@@ -52,7 +52,7 @@ services:
     image: healthcare_celery_flower
     command: /start-flower
     volumes:
-      - .:/app
+      - .:/usr/src/app/
     env_file:
       - ./.env/.dev
     ports:
@@ -60,7 +60,7 @@ services:
     depends_on:
       - redis
       - db
-      
+
   react-client:
     build:
       context: ./client
