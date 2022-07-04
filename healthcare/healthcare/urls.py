@@ -21,5 +21,5 @@ from member_api import urls as member_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/v1/', include(member_urls)),
+    path('api/', include(member_urls)),
 ]
