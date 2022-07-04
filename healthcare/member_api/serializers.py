@@ -16,7 +16,7 @@ class MemberSerializer(serializers.ModelSerializer):
             ),
             UniqueTogetherValidator(
                 queryset=Member.objects.all(),
-                fields=['phone_number', 'account_id']
+                fields=['client_member_id', 'account_id']
             )
         ]
 
